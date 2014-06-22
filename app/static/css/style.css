@@ -1,0 +1,30 @@
+body {
+    padding-top: 60px;
+}
+
+.current-config {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.action-icons {
+    white-space: nowrap;
+}
+
+.form-collapse-footer {
+    background-color: #eee;
+    padding: 10px;
+}
+
+.form-collapse {
+    margin-bottom: 0px;
+}
+
+.invisible {
+    display: none;
+}
+
+.admin-list {
+    list-style: none;
+    margin: 0;
+}

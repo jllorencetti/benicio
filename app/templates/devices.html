@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="accordion" class="accordion">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse">
+                Create Device
+            </a>
+        </div>
+        <div id="collapse" class="accordion-body collapse in">
+            <div class="collapse-inner">
+                <form class="form-horizontal form-collapse" method="POST" action="{{ url_for('devices') }}">
+                    {{ form.csrf_token }}
+                    {{ form.id(class_='invisible') }}
+                    <div class="control-group">
+                        {{ form.name.label(class_='control-label') }}
+                        <div class="controls">
+                            {{ form.name(size=50, class_='input-xlarge') }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form.mac_address.label(class_='control-label') }}
+                        <div class="controls">
+                            {{ form.mac_address(size=20, class_='input-medium') }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form.group.label(class_='control-label') }}
+                        <div class="controls">
+                            {{ form.group }}
+                        </div>
+                    </div>
+                    <div class="form-collapse-footer text-right">
+                        <button type="submit" class="btn btn-primary">Save Device</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr/>
+
+{% if devices %}
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Device name</th>
+        <th>MAC Address</th>
+        <th>Group Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for device in devices %}
+    <tr>
+        <td>{{ device.name }}</td>
+        <td>{{ device.mac_address }}</td>
+        <td>{{ device.group.name }}</td>
+        <td class="action-icons">
+            <div class="text-right">
+                <a href="{{ url_for('edit_device', device_id = device.id) }}"><i class="icon-pencil"></i></a>&nbsp;&nbsp;
+                <a id="{{ device.id }}" class="action-button delete-record" data-registertype="device" href="#"><i
+                        class="icon-remove"></i></a>
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+No entries yet.
+{% endif %}
+{% endblock %}

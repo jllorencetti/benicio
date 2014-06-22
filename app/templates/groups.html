@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="accordion" class="accordion">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse">
+                Create Group
+            </a>
+        </div>
+        <div id="collapse" class="accordion-body collapse in">
+            <div class="collapse-inner">
+                <form class="form-horizontal form-collapse" method="POST" action="{{ url_for('groups') }}">
+                    {{ form.csrf_token }}
+                    {{ form.id(class_='invisible') }}
+                    <div class="control-group">
+                        {{ form.name.label(class_='control-label') }}
+                        <div class="controls">
+                            {{ form.name(size=50, class_='input-xlarge') }}
+                        </div>
+                    </div>
+                    <div class="form-collapse-footer text-right">
+                        <button type="submit" class="btn btn-primary">Save Group</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr/>
+
+{% if groups %}
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Group name</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for group in groups %}
+    <tr>
+        <td>{{ group.name }}</td>
+        <td class="action-icons">
+            <div class="text-right">
+                {% if group.id != 0 %}
+                <a href="{{ url_for('edit_group', group_id = group.id) }}">
+                    <i class="icon-pencil"></i>
+                </a>&nbsp;&nbsp;
+                <a id="{{ group.id }}" class="action-button delete-record" data-registertype="group" href="#">
+                    <i class="icon-remove"></i>
+                </a>
+                {% endif %}
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

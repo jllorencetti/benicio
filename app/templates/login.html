@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form class="form-horizontal" method="POST" action="{{ url_for('login') }}">
+    {{ form.csrf_token }}
+    <div class="control-group">
+        <label class="control-label" for="user">Login</label>
+
+        <div class="controls">
+            {{ form.user }}
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="password">Password</label>
+
+        <div class="controls">
+            {{ form.password }}
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

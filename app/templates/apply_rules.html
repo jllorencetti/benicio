@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="POST" action="{{ url_for('applicate_rules') }}">
+    <div class="row">
+        <button type="submit" class="btn btn-primary">Apply Rule Set</button>
+    </div>
+    <br/>
+
+    <div class="row">
+    <div class="accordion" id="accordion2">
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2"
+                       href="#accordion-rules">
+                        Rules to Apply
+                    </a>
+                </div>
+                <div id="accordion-rules" class="accordion-body collapse in">
+                    <div class="accordion-inner">
+                        <table class="table table-condensed">
+                            {% if rules %}
+                            {% for rule in rules %}
+                            <tr>
+                                <td><input id="{{ rule.id }}" name="rule{{ rule.id }}" type="checkbox"></input></td>
+                                <td>{{ rule.name}}</td>
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2"
+                       href="#accordion-groups">
+                        Groups to Choose
+                    </a>
+                </div>
+                <div id="accordion-groups" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <table class="table table-condensed">
+                            {% if groups %}
+                            {% for group in groups %}
+                            <tr>
+                                <td><input id="{{ group.id }}" name="group{{ group.id }}" type="checkbox"
+                                           class="group-check"></input></td>
+                                <td>{{ group.name }}</td>
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2"
+                       href="#accordion-devices">
+                        Devices to Select
+                    </a>
+                </div>
+                <div id="accordion-devices" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <table class="table table-condensed">
+                            {% if devices %}
+                            {% for device in devices %}
+                            <tr>
+                                <td><input id="device{{ device.id }}" name="device{{ device.id }}" type="checkbox"
+                                           data-group-id="{{ device.group_id }}"></input></td>
+                                <td>{{ device.name }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</form>
+
+{% if rules_generated %}
+{% for rule_generated in rules_generated %}
+{{ rules_generated }}
+{% endfor %}
+{% endif %}
+
+{% endblock %}
