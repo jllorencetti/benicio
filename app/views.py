@@ -1,15 +1,8 @@
 import subprocess
-import hashlib
 from flask import render_template, redirect, flash, request, url_for
 from app import app, models, db, lm
 from forms import RuleForm, DeviceForm, GroupForm, LoginForm, ChangePasswordForm
 from flask_login import login_user, logout_user, login_required
-
-
-def get_hash(password):
-    md5 = hashlib.md5()
-    md5.update(password)
-    return md5.hexdigest()
 
 
 @lm.user_loader
@@ -23,7 +16,7 @@ def login():
     if form.validate_on_submit():
         user = models.User.query.filter_by(name=form.user.data).first()
         if not user is None:
-            if user.password == get_hash(form.password.data):
+            if user.check_password(form.password.data):
                 login_user(user)
                 flash("Logged in successfully.", "success")
                 return redirect(url_for("index"))
@@ -44,8 +37,8 @@ def index():
     form = ChangePasswordForm()
     if form.validate_on_submit():
         user = models.User.query.filter_by(name="Admin").first()
-        if user.password == get_hash(form.current_password.data):
-            user.password = get_hash(form.new_password.data)
+        if user.check_password(form.current_password.data):
+            user.set_password(form.new_password.data)
             db.session.commit()
         else:
             flash('Verify your password', 'error')

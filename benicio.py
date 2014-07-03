@@ -5,7 +5,7 @@ from app import app, db, models
 
 
 def insert_demodata():
-    db.session.add(models.User(name='Admin', password='0cc75c328858b5d53f188ccdc0f033c9'))
+    db.session.add(models.User(name='Admin', password='pbkdf2:sha1:1000$0jrJWk7S$15c39bbdff6514dfe3377ea5a7a15b7fd1f31a9b'))
     db.session.add(models.Group(id=0, name='Default Group'))
     db.session.add(models.Group(id=1, name='Group One'))
     db.session.add(models.Group(id=2, name='Group Two'))

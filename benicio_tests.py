@@ -14,7 +14,7 @@ class BenicioTestCase(unittest.TestCase):
         self.client = benicio.app.test_client()
         with self.client.session_transaction() as session:
             session['user_id'] = '1'
-        admin = models.User(name='Admin', password='0cc75c328858b5d53f188ccdc0f033c9')
+        admin = models.User(name='Admin', password='pbkdf2:sha1:1000$0jrJWk7S$15c39bbdff6514dfe3377ea5a7a15b7fd1f31a9b')
         dbs.add(admin)
         dbs.commit()
 
@@ -138,25 +138,14 @@ class BenicioTestCase(unittest.TestCase):
         self.assertTrue('allow+in+mac+DE%3A81%3A00%3AE5%3A32%3A94' in rv.data)
 
     def test_change_password(self):
-        admin = models.User(name='Admin', password='0cc75c328858b5d53f188ccdc0f033c9')
-        dbs.add(admin)
-        dbs.commit()
         self.client.post('/index', data=dict(current_password='bendmin', new_password='12345', retype_password='12345'))
-        user_password = models.User.query.filter_by(name="Admin").first().password
-        assert user_password == '827ccb0eea8a706c4c34a16891f84e7b'
+        user = models.User.query.filter_by(name="Admin").first()
+        self.assertTrue(user.check_password('12345'))
 
     def test_login(self):
-        admin = models.User(name='Admin', password='0cc75c328858b5d53f188ccdc0f033c9')
-        dbs.add(admin)
-        dbs.commit()
         self.client.post('/login', data=dict(user='Admin', password='bendmin'))
         rv = self.client.get('/index')
         assert 'Logged in successfully' in rv.data
-
-    @staticmethod
-    def test_gethash():
-        passhash = views.get_hash('bendmin')
-        assert passhash == '0cc75c328858b5d53f188ccdc0f033c9'
 
     @staticmethod
     def test_clear_group():

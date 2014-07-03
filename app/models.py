@@ -1,3 +1,4 @@
+from werkzeug.security import check_password_hash, generate_password_hash
 from app import db
 
 NAME_SIZE = 300
@@ -7,6 +8,12 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(NAME_SIZE))
     password = db.Column(db.String(150))
+
+    def check_password(self, input_password):
+        return check_password_hash(self.password, input_password)
+
+    def set_password(self, input_password):
+        self.password = generate_password_hash(input_password)
 
     def is_authenticated(self):
         return True
