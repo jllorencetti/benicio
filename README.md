@@ -39,7 +39,7 @@ The default login/password is:
 - Login: Admin (case sensitive)
 - Password: bendmin
 
-Important:
+Warning:
 ========
 In the 'config.py' file there's a DEBUG variable, set it to False only when you start to send commands directly to IPFW, if it's set to True, all commands will only be written in a file named 'file'.
 
