@@ -1,7 +1,12 @@
-It's my *first* web project and also my *first* Python project, strange things can happen. :P
+Super Important
+===============
+
+This project is not being updated. I'm leaving it here just for reference.
 
 Important
 =========
+
+It's my *first* web project and also my *first* Python project, strange things can happen. :P
 
 Some dependencies you need to install manually.
 
@@ -26,8 +31,6 @@ Or install by hand the main packages with:
 - pip install Flask-SQLAlchemy
 - pip install Flask-WTF
 
-Try to keep it working with the most recent version of each package.
-
 After installing everything, you can run the tests and see if it passes:
 python benicio_tests.py
 
@@ -42,5 +45,4 @@ In the 'config.py' file there's a DEBUG variable, set it to False only when you 
 
 Caution:
 =======
-While I don't create a daemon to execute the commands from the web interface, I recommend you to run this project inside a BSD Jail.
-For security sake.
+I recommend you to run this project inside a BSD Jail. For security sake.
