@@ -1,8 +1,5 @@
-Super Important
-===============
-
-This project is not being updated. I'm leaving it here just for reference.
-
+ [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+ 
 Important
 =========
 
